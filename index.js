@@ -7,9 +7,10 @@ const { Server } = require('socket.io');
 const server = http.createServer(app)
 
 const io = new Server(server,{
-    allowRequest: (req, callback) => {
-        callback(null, req.headers.origin === undefined); // cross-origin requests will not be allowed
-      }
+    cors:{
+        origin: ["http://localhost:3000"],
+        methods: ["GET","POST"],
+    },
 });
 
 io.on("connect", socket => {
@@ -22,10 +23,6 @@ io.on("connect", socket => {
         console.log(message)
         io.emit("receive-message",message)
     })
-    socket.on("ping", input => {
-        io.emit("pong")
-    })
-    
 })
 
 server.listen(3001, () => {
