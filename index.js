@@ -24,7 +24,7 @@ io.on("connect", socket => {
         io.emit("receive-message",message)
     })
     socket.on("ping", input => {
-        console.log('pong')
+        io.emit("pong")
     })
     
 })
