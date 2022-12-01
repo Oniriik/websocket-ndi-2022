@@ -7,10 +7,9 @@ const { Server } = require('socket.io');
 const server = http.createServer(app)
 
 const io = new Server(server,{
-    cors:{
-        origin: '*',
-        methods: ["GET","POST"],
-    },
+    allowRequest: (req, callback) => {
+        callback(null, req.headers.origin === undefined); // cross-origin requests will not be allowed
+      }
 });
 
 io.on("connect", socket => {
