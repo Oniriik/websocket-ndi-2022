@@ -8,12 +8,9 @@ require('dotenv').config()
 const server = http.createServer(app)
 
 const io = new Server(server,{
-
-    cors: {
-        origin: process.env.CORS_URL,
-        methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true
+    allowRequest: (req, callback) => {
+        const noOriginHeader = req.headers.origin === undefined;
+        callback(null, noOriginHeader);
       }
 });
 
